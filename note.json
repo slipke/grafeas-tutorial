@@ -1,10 +1,10 @@
 {
   "name": "projects/image-signing/notes/production",
-  "shortDescription": "Production image signer.",
-  "longDescription": "Production image signer.",
-  "attestationAuthority": {
+  "short_description": "Production image signer.",
+  "long_description": "Production image signer.",
+  "attestation_authority": {
     "hint": {
-      "humanReadableName": "production"
+      "human_readable_name": "production"
     }
   }
 }

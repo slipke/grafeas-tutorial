@@ -177,12 +177,14 @@ RESOURCE_URL="https://gcr.io/hightowerlabs/echod@sha256:aba48d60ba4410ec921f9d2e
 cat > occurrence.json <<EOF
 {
   "resourceUrl": "${RESOURCE_URL}",
-  "noteName": "projects/image-signing/notes/production",
-  "attestationDetails": {
-    "pgpSignedAttestation": {
-       "signature": "${GPG_SIGNATURE}",
-       "contentType": "application/vnd.gcr.image.url.v1",
-       "pgpKeyId": "${GPG_KEY_ID}"
+  "note_name": "projects/image-signing/notes/production",
+  "attestation": {
+    "attestation": {
+      "pgp_signed_attestation": {
+        "signature": "${GPG_SIGNATURE}",
+        "content_type": "CONTENT_TYPE_UNSPECIFIED",
+        "pgp_key_id": "${GPG_KEY_ID}"
+      }
     }
   }
 }
@@ -192,8 +194,8 @@ EOF
 Post the pgpSignedAttestation occurrence:
 
 ```
-curl -X POST \
-  'http://127.0.0.1:8080/v1beta1/projects/image-signing/occurrences' \
+curl -X POST 'http://127.0.0.1:8080/v1beta1/projects/image-signing/occurrences' \
+  -H "Content-Type: application/json" \
   -d @occurrence.json
 ```
 
