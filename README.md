@@ -146,11 +146,20 @@ kubectl port-forward \
   8080:8080
 ```
 
+Create the `image-signing` project:
+
+```
+curl -X POST \
+  "http://127.0.0.1:8080/v1beta1/projects" \
+  -H 'Content-Type: application/json' \
+  -d '{"name": "projects/image-signing"}'
+```
+
 Create the `production` attestationAuthority note:
 
 ```
 curl -X POST \
-  "http://127.0.0.1:8080/v1alpha1/projects/image-signing/notes?noteId=production" \
+  "http://127.0.0.1:8080/v1beta1/projects/image-signing/notes" \
   -d @note.json
 ```
 
@@ -169,7 +178,7 @@ cat > occurrence.json <<EOF
 {
   "resourceUrl": "${RESOURCE_URL}",
   "noteName": "projects/image-signing/notes/production",
-  "attestation": {
+  "attestationDetails": {
     "pgpSignedAttestation": {
        "signature": "${GPG_SIGNATURE}",
        "contentType": "application/vnd.gcr.image.url.v1",
@@ -184,7 +193,7 @@ Post the pgpSignedAttestation occurrence:
 
 ```
 curl -X POST \
-  'http://127.0.0.1:8080/v1alpha1/projects/image-signing/occurrences' \
+  'http://127.0.0.1:8080/v1beta1/projects/image-signing/occurrences' \
   -d @occurrence.json
 ```
 
@@ -216,7 +225,7 @@ kubectl create secret tls tls-image-signature-webhook \
 Create the `image-signature-webhook` deployment:
 
 ```
-kubectl apply -f kubernetes/image-signature-webhook.yaml 
+kubectl apply -f kubernetes/image-signature-webhook.yaml
 ```
 
 Create the `image-signature-webook` ValidatingWebhookConfiguration:

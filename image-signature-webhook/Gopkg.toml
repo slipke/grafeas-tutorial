@@ -23,7 +23,7 @@
 
 [[constraint]]
   branch = "master"
-  name = "github.com/Grafeas/client-go"
+  name = "github.com/grafeas/client-go"
 
 [[constraint]]
   branch = "master"
@@ -36,3 +36,11 @@
 [[constraint]]
   branch = "master"
   name = "k8s.io/apimachinery"
+
+[[constraint]]
+  branch = "master"
+  name = "github.com/antihax/optional"
+
+[[constraint]]
+  branch = "master"
+  name = "golang.org/x/oauth2"

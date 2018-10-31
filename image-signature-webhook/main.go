@@ -30,7 +30,7 @@ import (
 	"golang.org/x/crypto/openpgp/clearsign"
 	"golang.org/x/crypto/openpgp/packet"
 
-	grafeas "github.com/Grafeas/client-go/v1alpha1"
+	grafeas "github.com/grafeas/client-go/v1alpha1"
 
 	"k8s.io/api/admission/v1beta1"
 	"k8s.io/api/core/v1"
@@ -44,8 +44,8 @@ var (
 )
 
 var (
-	notesPath       = "/v1alpha1/projects/image-signing/notes"
-	occurrencesPath = "/v1alpha1/projects/image-signing/occurrences"
+	notesPath       = "/v1beta1/projects/image-signing/notes"
+	occurrencesPath = "/v1beta1/projects/image-signing/occurrences"
 )
 
 func main() {
@@ -107,6 +107,8 @@ func admissionReviewHandler(w http.ResponseWriter, r *http.Request) {
 			continue
 		}
 
+		log.Printf("Received response: %+v", string(data))
+
 		defer resp.Body.Close()
 
 		if resp.StatusCode != 200 {
@@ -114,25 +116,38 @@ func admissionReviewHandler(w http.ResponseWriter, r *http.Request) {
 			continue
 		}
 
-		occurrencesResponse := grafeas.ListOccurrencesResponse{}
+		occurrencesResponse := grafeas.ApiListOccurrencesResponse{}
 		if err := json.Unmarshal(data, &occurrencesResponse); err != nil {
 			log.Println(err)
 			continue
 		}
 
+		log.Printf("Mapped to ApiListOccurrencesResponse: %+v", occurrencesResponse)
+
 		// Find a valid signature for the given container image.
 		match := false
 		for _, occurrence := range occurrencesResponse.Occurrences {
-			resourceUrl := occurrence.ResourceUrl
-			signature := occurrence.Attestation.PgpSignedAttestation.Signature
-			keyId := occurrence.Attestation.PgpSignedAttestation.PgpKeyId
+
+			// Skip if no AttestationDetails found
+			if occurrence.AttestationDetails == nil {
+				continue
+			}
+
+			// Skip if we don't have a PgpSignedAttestation
+			if occurrence.AttestationDetails.PgpSignedAttestation == nil {
+				continue
+			}
+
+			resourceURL := occurrence.ResourceUrl
+			signature := occurrence.AttestationDetails.PgpSignedAttestation.Signature
+			keyID := occurrence.AttestationDetails.PgpSignedAttestation.PgpKeyId
 
 			log.Printf("Container Image: %s", container.Image)
-			log.Printf("ResourceUrl: %s", resourceUrl)
+			log.Printf("ResourceUrl: %s", resourceURL)
 			log.Printf("Signature: %s", signature)
-			log.Printf("KeyId: %s", keyId)
+			log.Printf("KeyId: %s", keyID)
 
-			if container.Image != strings.TrimPrefix(resourceUrl, "https://") {
+			if container.Image != strings.TrimPrefix(resourceURL, "https://") {
 				continue
 			}
 
@@ -144,7 +159,7 @@ func admissionReviewHandler(w http.ResponseWriter, r *http.Request) {
 				continue
 			}
 
-			publicKey := fmt.Sprintf("/etc/admission-controller/pubkeys/%s.pub", keyId)
+			publicKey := fmt.Sprintf("/etc/admission-controller/pubkeys/%s.pub", keyID)
 			log.Printf("Using public key: %s", publicKey)
 
 			f, err := os.Open(publicKey)
