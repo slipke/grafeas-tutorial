@@ -176,7 +176,9 @@ RESOURCE_URL="https://gcr.io/hightowerlabs/echod@sha256:aba48d60ba4410ec921f9d2e
 ```
 cat > occurrence.json <<EOF
 {
-  "resourceUrl": "${RESOURCE_URL}",
+  "resource": {
+    "uri": "${RESOURCE_URL}"
+  },
   "note_name": "projects/image-signing/notes/production",
   "attestation": {
     "attestation": {
