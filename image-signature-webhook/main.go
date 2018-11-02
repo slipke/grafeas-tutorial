@@ -30,7 +30,7 @@ import (
 	"golang.org/x/crypto/openpgp/clearsign"
 	"golang.org/x/crypto/openpgp/packet"
 
-	grafeas "github.com/grafeas/client-go/v1alpha1"
+	grafeas "github.com/slipke/client-go/v1beta1"
 
 	"k8s.io/api/admission/v1beta1"
 	"k8s.io/api/core/v1"
@@ -116,7 +116,7 @@ func admissionReviewHandler(w http.ResponseWriter, r *http.Request) {
 			continue
 		}
 
-		occurrencesResponse := grafeas.ApiListOccurrencesResponse{}
+		occurrencesResponse := grafeas.V1beta1ListOccurrencesResponse{}
 		if err := json.Unmarshal(data, &occurrencesResponse); err != nil {
 			log.Println(err)
 			continue
@@ -129,18 +129,18 @@ func admissionReviewHandler(w http.ResponseWriter, r *http.Request) {
 		for _, occurrence := range occurrencesResponse.Occurrences {
 
 			// Skip if no AttestationDetails found
-			if occurrence.AttestationDetails == nil {
+			if occurrence.Attestation == nil {
 				continue
 			}
 
 			// Skip if we don't have a PgpSignedAttestation
-			if occurrence.AttestationDetails.PgpSignedAttestation == nil {
+			if occurrence.Attestation.Attestation.PgpSignedAttestation == nil {
 				continue
 			}
 
-			resourceURL := occurrence.ResourceUrl
-			signature := occurrence.AttestationDetails.PgpSignedAttestation.Signature
-			keyID := occurrence.AttestationDetails.PgpSignedAttestation.PgpKeyId
+			resourceURL := occurrence.Resource.Uri
+			signature := occurrence.Attestation.Attestation.PgpSignedAttestation.Signature
+			keyID := occurrence.Attestation.Attestation.PgpSignedAttestation.PgpKeyId
 
 			log.Printf("Container Image: %s", container.Image)
 			log.Printf("ResourceUrl: %s", resourceURL)

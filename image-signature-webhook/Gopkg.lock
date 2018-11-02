@@ -53,6 +53,14 @@
   revision = "a2cc252bfcfa9d0587939ccc805fe555937eaa16"
 
 [[projects]]
+  branch = "master"
+  digest = "1:37516f629f68c93636cad13de19d30583dd393a81270f23a7ba25d98e83241fb"
+  name = "github.com/slipke/client-go"
+  packages = ["v1beta1"]
+  pruneopts = ""
+  revision = "f9aab284b50ffaf1be6fcaf64d6d0f72d138c886"
+
+[[projects]]
   digest = "1:261bc565833ef4f02121450d74eb88d5ae4bd74bfe5d0e862cddb8550ec35000"
   name = "github.com/spf13/pflag"
   packages = ["."]
@@ -197,6 +205,7 @@
   analyzer-version = 1
   input-imports = [
     "github.com/grafeas/client-go/v1alpha1",
+    "github.com/slipke/client-go/v1beta1",
     "golang.org/x/crypto/openpgp",
     "golang.org/x/crypto/openpgp/armor",
     "golang.org/x/crypto/openpgp/clearsign",
