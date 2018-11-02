@@ -128,8 +128,10 @@ func admissionReviewHandler(w http.ResponseWriter, r *http.Request) {
 		match := false
 		for _, occurrence := range occurrencesResponse.Occurrences {
 
+			log.Printf("Checking occurrence %+v", occurrence)
+
 			// Skip if no AttestationDetails found
-			if occurrence.Attestation == nil {
+			if occurrence.Attestation == nil || occurrence.Attestation.Attestation == nil || occurrence.Resource == nil {
 				continue
 			}
 
@@ -137,6 +139,8 @@ func admissionReviewHandler(w http.ResponseWriter, r *http.Request) {
 			if occurrence.Attestation.Attestation.PgpSignedAttestation == nil {
 				continue
 			}
+
+			log.Printf("Found occurrence.attestation.attestation.PgpSignedAttestation %+v", occurrence.Attestation.Attestation.PgpSignedAttestation)
 
 			resourceURL := occurrence.Resource.Uri
 			signature := occurrence.Attestation.Attestation.PgpSignedAttestation.Signature

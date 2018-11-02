@@ -13,5 +13,5 @@ package grafeas
 type AttestationAttestation struct {
 
 	// A PGP signed attestation.
-	PgpSignedAttestation *AttestationPgpSignedAttestation `json:"pgp_signed_attestation,omitempty"`
+	PgpSignedAttestation *AttestationPgpSignedAttestation `json:"pgpSignedAttestation,omitempty"`
 }
