@@ -1,0 +1,15 @@
+{
+  "resource": {
+    "uri": "https://gcr.io/hightowerlabs/echod@sha256:aba48d60ba4410ec921f9d2e8169236c57660d121f9430dc9758d754eec8f887"
+  },
+  "note_name": "projects/image-signing/notes/production",
+  "attestation": {
+    "attestation": {
+      "pgp_signed_attestation": {
+        "signature": "LS0tLS1CRUdJTiBQR1AgU0lHTkVEIE1FU1NBR0UtLS0tLQpIYXNoOiBTSEExCgpzaGEyNTY6YWJhNDhkNjBiYTQ0MTBlYzkyMWY5ZDJlODE2OTIzNmM1NzY2MGQxMjFmOTQzMGRjOTc1OGQ3NTRlZWM4Zjg4NwotLS0tLUJFR0lOIFBHUCBTSUdOQVRVUkUtLS0tLQpWZXJzaW9uOiBHbnVQRyB2MQoKaVFFY0JBRUJBZ0FHQlFKYjNDZjdBQW9KRUtQdGZxZldtMlpSb3JnSC8zUGlnOU12TTh2YkczdGN1VU1ySUkwRQpKWGZ1UFJaYWIyaHROcDJRRGZXaURBVU9BcHRhTzJvT3pHVEtjcCsrd24ra05WTmp6SFFIQXVGQXBGY0tqWjkwCkliT1g2SUxJWUlhQkdlcFc0UkxBMGJ3NWY2a2kyajdXMi9EWTcxVithWTRqZzNXTEoycEpwNWJ4SnliLzBNMHQKUzkyOXhsUndYb0JaS29Pa0JOR2YxODREdVk2SzlsdGtuSEFkbTI3cHBiWVQ3ZUViMVJJdEhhekZ1SmU0Q3lrMwpLalpXdE5VMGxsVFZBZGMrTy8xaXhic0dhT21kWmEvL1pxVjZNaGRxVWplbnFUcmdRM3B6ZWdwSGRSTU12bmxNCmV4aXQ5N0pENEdabzBxL1pLV0oyVjhZb2tUVWo4U3VQNWFRbjNmZkRGUW1xRzdmTHJqajF2clFza3RDdG1Ncz0KPXRMKzIKLS0tLS1FTkQgUEdQIFNJR05BVFVSRS0tLS0tCg==",
+        "content_type": "CONTENT_TYPE_UNSPECIFIED",
+        "pgp_key_id": "D69B6651"
+      }
+    }
+  }
+}
