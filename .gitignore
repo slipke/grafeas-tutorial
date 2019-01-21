@@ -1,0 +1,6 @@
+/pki/ca-key.pem
+/pki/ca.csr
+/pki/ca.pem
+/pki/image-signature-webhook-key.pem
+/pki/image-signature-webhook.csr
+/pki/image-signature-webhook.pem
